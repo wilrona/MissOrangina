@@ -14,7 +14,7 @@ class Phase extends Plugin_AdminController{
         parent::__construct(__CLASS__, "add_menu_phase");
     }
 
-    public function add_menu_phase(){
+    static function add_menu_phase(){
         $menu = array(
             array(
                 'page_title' => 'Les phases du concours',

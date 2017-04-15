@@ -8,7 +8,7 @@ Author: Ndi Ronald Steve
 License: A "Slug" license name e.g. GPL2
 */
 
-ob_start();
+
 
 
 #creation des tables de la base de donnee
@@ -54,14 +54,6 @@ Autoloader::register();
 $bootstrap = new Plugin_Bootstrap();
 $bootstrap->exe_footer_admin();
 
-
-if(is_admin()){
-    wp_enqueue_script('bootstrapjs', plugins_url( 'assets/js/bootstrap.min.js', __FILE__ ), array(), "1.0.0", true);
-    wp_enqueue_script('inputdata1', plugins_url( 'assets/js/inputmask.js', __FILE__ ), array(), "1.0.0", true);
-    wp_enqueue_script('inputdata2', plugins_url( 'assets/js/jquery.inputmask.js', __FILE__ ), array(), "1.0.0", true);
-    wp_enqueue_script('inputdata3', plugins_url( 'assets/js/jquery.inputmask.bundle.min.js', __FILE__ ), array(), "1.0.0", true);
-    wp_enqueue_script('customjs', plugins_url( 'assets/js/script.js', __FILE__ ), array(), "1.0.0", true);
-}
 
 //# Supprimer les menus dans l'interface admin
 function remove_menu_pages() {
@@ -170,6 +162,11 @@ function remove_admin_bar_links() {
 }
 add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 
+
+add_action('init', 'do_output_buffer');
+function do_output_buffer() {
+    ob_start();
+}
 
 #initalisation de la classe de gestion des routes
 # il prend en parametre true ou false

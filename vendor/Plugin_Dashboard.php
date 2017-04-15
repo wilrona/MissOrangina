@@ -26,7 +26,7 @@ class Plugin_Dashboard{
     /**
      * Liste des elements du tableau de bord par defaut a initialiser
      */
-    public function remove_dashboard_widgets()
+    static function remove_dashboard_widgets()
     {
         global $wp_meta_boxes;
 
@@ -46,7 +46,7 @@ class Plugin_Dashboard{
     /**
      * suppression des menus d'aide par default
      */
-    public  function remove_contextual_help() {
+    static  function remove_contextual_help() {
         $ecran = get_current_screen();
         $ecran->remove_help_tabs ();
     }
@@ -55,23 +55,23 @@ class Plugin_Dashboard{
     /**
      * Cette fonction execute la suppression de l'element d'aide par defaut de wordpress
      */
-    public  function remove_help(){
+    static  function remove_help(){
         add_action('admin_head', array(__CLASS__,'remove_contextual_help'));
     }
 
     /**
      * Suppression du welcome page par default
      */
-    public function remove_welcome(){
+    static function remove_welcome(){
         remove_action('welcome_panel','wp_welcome_panel');
     }
 
-    public function welcome_init(){
+    static function welcome_init(){
         add_action('after_switch_theme',array(__CLASS__,'st_welcome_init'));
     }
 
     # Affficher le panel welcome quand l'utilisateur se connecte
-    public function st_welcome_init() {
+    static function st_welcome_init() {
         global $wpdb;
         $wpdb->update($wpdb->usermeta,array('meta_value'=>1),array('meta_key'=>'show_welcome_panel'));
     }

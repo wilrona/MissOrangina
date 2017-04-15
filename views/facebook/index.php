@@ -7,7 +7,7 @@
  */
 
 ?>
-<?php header("Access-Control-Allow-Origin: *"); ?>
+<?php header("Access-Control-Allow-Origin: *"); http_response_code(200);?>
 <div class="modal-header bg-warning">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title" id="myModalLabel">Inscription</h4>

@@ -30,7 +30,7 @@ class Dashboard extends Plugin_Dashboard{
 
     }
 
-    function add_dashboard_widgets()
+    static function add_dashboard_widgets()
     {
 
         add_meta_box('stat_inscrit', 'Statistique des inscriptions' ,array(__CLASS__,'widget_statistique_inscription'), 'dashboard', 'normal', 'high');
@@ -57,13 +57,13 @@ class Dashboard extends Plugin_Dashboard{
     }
 
 
-    function st_welcome_panel() {
+    static function st_welcome_panel() {
         self::$view->render_view_admin('dashboard/welcome');
     }
 
 
 
-    function widget_statistique_inscription() {
+    static function widget_statistique_inscription() {
 
         global $wpdb;
         $table_name = $wpdb->prefix. 'miss_inscrit';
@@ -82,16 +82,16 @@ class Dashboard extends Plugin_Dashboard{
         self::$view->render_view_admin('dashboard/inscription');
     }
 
-    function widget_statistique_vote_general() {
+    static function widget_statistique_vote_general() {
 
         global $wpdb;
         $table_name = $wpdb->prefix. 'miss_vote';
-        self::$view->votes = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) as nbr FROM $table_name WHERE 1", 1));
+        self::$view->votes = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) as nbr FROM $table_name WHERE %d", 1));
 
         self::$view->render_view_admin('dashboard/votes');
     }
 
-    function widget_statistique_vote_quart(){
+    static function widget_statistique_vote_quart(){
 
         global $wpdb;
         $table_vote = $wpdb->prefix. 'miss_vote';
@@ -109,7 +109,7 @@ class Dashboard extends Plugin_Dashboard{
         self::$view->render_view_admin('dashboard/votes_quarts');
     }
 
-    function widget_statistique_vote_demi(){
+    static function widget_statistique_vote_demi(){
 
         global $wpdb;
         $table_vote = $wpdb->prefix. 'miss_vote';
@@ -127,7 +127,7 @@ class Dashboard extends Plugin_Dashboard{
         self::$view->render_view_admin('dashboard/votes_demi');
     }
 
-    function widget_statistique_vote_final(){
+    static function widget_statistique_vote_final(){
 
         global $wpdb;
         $table_vote = $wpdb->prefix. 'miss_vote';

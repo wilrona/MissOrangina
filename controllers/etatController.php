@@ -8,6 +8,7 @@
 
 namespace Controller\etat;
 
+require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
 
 use HTML2PDF;
 use Plugin_Controller;
@@ -38,7 +39,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/statistique', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('P', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -74,7 +75,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/stat_vote', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('P', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -103,7 +104,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/liste_inscrit', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('L', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -123,7 +124,7 @@ class etatController extends Plugin_Controller {
         $table_vote = $wpdb->prefix. 'miss_vote';
         $this->view->villes = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_ville WHERE %d", 1), ARRAY_A);
 
-        $this->view->inscrit = $wpdb->get_results($wpdb->prepare("SELECT c.*, COUNT(v.id) as nbr FROM $table_vote as v, $table_name as c  WHERE v.idcandidat = c.id and v.etape = %d ORDER BY nbr DESC ", $_REQUEST['phase']), ARRAY_A);
+        $this->view->inscrit = $wpdb->get_results($wpdb->prepare("SELECT COUNT(v.id) as nbr, c.* FROM $table_vote as v, $table_name as c  WHERE v.idcandidat = c.id and v.etape = %d ORDER BY nbr DESC ", $_REQUEST['phase']), ARRAY_A);
 
         if($_REQUEST['phase'] == 2){
             $this->view->phase = "1/4 Finale";
@@ -136,7 +137,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/classement', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('L', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -178,7 +179,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/classement', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('L', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -194,7 +195,7 @@ class etatController extends Plugin_Controller {
         if($ville == null){
             return false;
         }
-
+        
         ob_start();
 
         global $wpdb;
@@ -203,12 +204,12 @@ class etatController extends Plugin_Controller {
         $this->view->villes = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_ville WHERE %d", 1), ARRAY_A);
         if(!isset($_REQUEST['phase']) && empty($_REQUEST['phase'])) {
             $this->view->inscrit = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $table_name WHERE  ville = %d", $ville),
+                $wpdb->prepare("SELECT * FROM $table_name WHERE  ville = %s", $ville),
                 ARRAY_A
             );
         }else{
             $this->view->inscrit = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $table_name WHERE  ville = %d AND etape >= %d", $ville, $_REQUEST['phase']),
+                $wpdb->prepare("SELECT * FROM $table_name WHERE  ville = %s AND etape >= %d", $ville, $_REQUEST['phase']),
                 ARRAY_A
             );
 
@@ -227,7 +228,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/liste_inscrit', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('L', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -284,7 +285,7 @@ class etatController extends Plugin_Controller {
         $this->view->render_view('etat/liste_inscrit', true);
 
         $content = ob_get_clean();
-        require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'vendor/html2pdf/html2pdf.class.php');
+        http_response_code(200);
         try{
             $pdf = new HTML2PDF('L', 'A4', 'fr');
             $pdf->writeHTML($content);
@@ -293,6 +294,24 @@ class etatController extends Plugin_Controller {
             die($e);
         }
 
+    }
+
+    static function suppr_accents($str, $encoding='utf-8')
+    {
+        // transformer les caractères accentués en entités HTML
+        $str = htmlentities($str, ENT_NOQUOTES, $encoding);
+    
+        // remplacer les entités HTML pour avoir juste le premier caractères non accentués
+        // Exemple : "&ecute;" => "e", "&Ecute;" => "E", "Ã " => "a" ...
+        $str = preg_replace('#&([A-za-z])(?:acute|grave|cedil|circ|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+    
+        // Remplacer les ligatures tel que : Œ, Æ ...
+        // Exemple "Å“" => "oe"
+        $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
+        // Supprimer tout le reste
+        $str = preg_replace('#&[^;]+;#', '', $str);
+    
+        return $str;
     }
 
 } 

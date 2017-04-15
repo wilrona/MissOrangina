@@ -1278,7 +1278,7 @@ class WP_List_Table_Custom {
         }
 
         $rows = ob_get_clean();
-
+        http_response_code(200);
         $response = array( 'rows' => $rows );
 
         if ( isset( self::$_pagination_args['total_items'] ) ) {

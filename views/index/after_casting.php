@@ -3,13 +3,13 @@
 
 <div class="l-container">
     <div class="body_left">
-        <h2 class="h2"> Miss Orangina 2015 <?php if($this->etape == 2): ?> <?php echo '( 1/4 de Finale )'; elseif($this->etape == 3): echo '( 1/2 Finale )';  ?> <?php endif; ?></h2>
+        <h2 class="h2" style="text-align: center;"> <?php if($this->etape == 2): ?> <?php echo 'Les qualifiées pour les finales régionales'; elseif($this->etape == 3): echo '( 1/2 Finale )';  ?> <?php endif; ?></h2>
 
         <div class="concept clearfix" style="text-align: center;">
             <br/>
-                        <h3>Votez avec votre compte Facebook</h3>
+                        <!--<h3>Votez avec votre compte Facebook</h3>
 
-            <br/>
+            <br/>-->
         </div>
         <br/>
         <!-- tabs -->
@@ -48,7 +48,7 @@
 <!--                                                        <p class="profession">--><?//= $candidat['Age'] ?><!-- ans</p>-->
                                                     </div>
                                                     <div class="footer clearfix">
-                                                        <div class="vote">
+                                                        <!--<div class="vote">
                                                             <span class="right">Votes</span>
                                                             <span class="left">
                                                                 <?php
@@ -72,7 +72,7 @@
 
                                                                 </span>
 
-                                                        </div>
+                                                        </div>-->
 
                                                     </div>
                                                 </div>
@@ -84,7 +84,7 @@
                                                         <hr>
 <!--                                                        <a href="--><?php //echo get_site_url(); ?><!--/vote/profil/--><?php //echo $candidat['id'];  ?><!--" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-primary">Details</a>-->
 <!--                                                        <span class="name">OU</span>-->
-                                                        <a href="<?php echo get_site_url(); ?>/facebook/vote/<?php echo $candidat['id'];  ?>" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-contact">Votez ici</a>
+                                                        <!--<a href="<?php echo get_site_url(); ?>/facebook/vote/<?php echo $candidat['id'];  ?>" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-contact">Votez ici</a>-->
                                                     </div>
                                                 </div>
                                             </div> <!-- end back panel -->

@@ -25,7 +25,7 @@
         </div>
         <hr/>
 
-        <h2 class="h2">Information sur le concours  Miss Orangina 2015</h2>
+        <h2 class="h2">Information sur le concours  Miss Orangina 2017</h2>
 
         <!-- tabs -->
         <div class="tabs-x tab-align-center tabs-above">

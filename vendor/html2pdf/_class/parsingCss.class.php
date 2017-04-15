@@ -1671,7 +1671,7 @@ class HTML2PDF_parsingCss
         // remove the comments
         $code = preg_replace('/\/\*.*?\*\//s', '', $code);
 
-        // split each CSS code "selector { value }"
+        // preg_split each CSS code "selector { value }"
         preg_match_all('/([^{}]+){([^}]*)}/isU', $code, $match);
 
         // for each CSS code

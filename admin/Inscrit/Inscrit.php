@@ -5,7 +5,6 @@
  * Date: 18/09/2015
  * Time: 14:33
  */
-
 require "List_View_Inscrit.php";
 require "List_View_Inscrit_Quart.php";
 require "List_View_Inscrit_Demi.php";
@@ -44,7 +43,7 @@ class Inscrit extends Plugin_AdminController{
         return $string;
     }
 
-    public function add_menu_inscrit(){
+    static function add_menu_inscrit(){
         $menu = array(
             array(
                 'page_title' => 'Liste des inscrits',
@@ -86,12 +85,13 @@ class Inscrit extends Plugin_AdminController{
         parent::menu_page_admin($menu);
     }
 
-    public function add_to_phase(){
+    static function add_to_phase(){
         if(isset($_REQUEST['id']) && !empty($_REQUEST['id'])){
             global $wpdb;
             $table_inscrit = $wpdb->prefix. 'miss_inscrit';
             $inscrit = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_inscrit WHERE id = %d", $_REQUEST['id']), ARRAY_A);
             $data = array();
+            $location = '/';
             if($inscrit['etape'] <= 1){
                 $data['etape'] = 2;
                 $location = menu_page_url(PREFIX_PLUGINS_NAME."_inscrit", false );
@@ -109,16 +109,18 @@ class Inscrit extends Plugin_AdminController{
                 $location = menu_page_url(PREFIX_PLUGINS_NAME."_view_inscrit_final", false );
             }
             $wpdb->update($table_inscrit, $data, array('id' => $inscrit['id']));
+
             header('location:'.$location);
         }
     }
 
-    public function remove_to_phase(){
+    static function remove_to_phase(){
         if(isset($_REQUEST['id']) && !empty($_REQUEST['id'])){
             global $wpdb;
             $table_inscrit = $wpdb->prefix. 'miss_inscrit';
             $inscrit = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_inscrit WHERE id = %d", $_REQUEST['id']), ARRAY_A);
             $data = array();
+            $location = '/';
             if($inscrit['etape'] == 2){
                 $data['etape'] = 1;
                 $location = menu_page_url(PREFIX_PLUGINS_NAME."_view_inscrit_quart", false );
@@ -141,7 +143,7 @@ class Inscrit extends Plugin_AdminController{
     }
 
 
-    public function add_menu_inscrit_quart(){
+    static function add_menu_inscrit_quart(){
         $menu = array(
             array(
                 'submenu' => array(
@@ -161,7 +163,7 @@ class Inscrit extends Plugin_AdminController{
         parent::menu_page_admin($menu);
     }
 
-    public function add_menu_inscrit_demi(){
+    static function add_menu_inscrit_demi(){
         $menu = array(
             array(
                 'submenu' => array(
@@ -180,7 +182,7 @@ class Inscrit extends Plugin_AdminController{
         parent::menu_page_admin($menu);
     }
 
-    public function add_menu_inscrit_final(){
+    static function add_menu_inscrit_final(){
         $menu = array(
             array(
                 'submenu' => array(
@@ -200,7 +202,7 @@ class Inscrit extends Plugin_AdminController{
         parent::menu_page_admin($menu);
     }
 
-    public function add_menu_inscrit_gagnant(){
+    static function add_menu_inscrit_gagnant(){
         $menu = array(
             array(
                 'submenu' => array(
@@ -221,33 +223,33 @@ class Inscrit extends Plugin_AdminController{
     }
 
 
-    public function Inscrit_Quart_Final(){
+    static function Inscrit_Quart_Final(){
         self::$view->render_view_admin("inscrit/quart");
     }
 
 
-    public function Inscrit_Demi_Final(){
+    static function Inscrit_Demi_Final(){
         self::$view->render_view_admin("inscrit/demi");
     }
 
-    public function Inscrit_Final(){
+    static function Inscrit_Final(){
         self::$view->render_view_admin("inscrit/final");
     }
 
-    public function Inscrit_Gagnant(){
+    static function Inscrit_Gagnant(){
         self::$view->render_view_admin("inscrit/gagnant");
     }
 
     /*
     * Debut des actions de nos vues
     */
-    public function IndexInscrit(){
+    static function IndexInscrit(){
 
         self::$view->render_view_admin("inscrit/index");
     }
 
 
-    public function  FicheInscrit(){
+    static function  FicheInscrit(){
         global $wpdb;
         $table_name = $wpdb->prefix. 'miss_inscrit';
         $table_phase = $wpdb->prefix. 'miss_phase';
@@ -286,7 +288,7 @@ class Inscrit extends Plugin_AdminController{
             if(empty($data['dateNais'])){
                 $messages['dateNais']="la date de naissance est obligatoire";
             }else{
-                list($jour, $mois, $annee) = split('[/.]', $data['dateNais']);
+                list($jour, $mois, $annee) = preg_split('[/]', $data['dateNais']);
                 $today['mois'] = date('n');
                 $today['jour'] = date('j');
                 $today['annee'] = date('Y');
@@ -299,7 +301,7 @@ class Inscrit extends Plugin_AdminController{
                     else
                         $annees--;
                 }
-                if($annees < 18 || $annees > 25)$messages['dateNais_Age']= "Age compris entre 18 et 25 ans pour participer à ce concours";
+                if($annees < 18 || $annees > 26)$messages['dateNais_Age']= "Age compris entre 18 et 25 ans pour participer à ce concours";
 
             }
 
@@ -367,20 +369,20 @@ class Inscrit extends Plugin_AdminController{
         self::$view->render_view_admin("inscrit/fiche");
     }
 
-    public function MY_Modal(){
+    static function MY_Modal(){
         add_action('wp_ajax_inscrits', array(__CLASS__, 'inscrits'));
         add_action('wp_ajax_ville', array(__CLASS__, 'ville'));
         add_action('wp_ajax_age', array(__CLASS__, 'age'));
     }
 
-    public function inscrits(){
+    static function inscrits(){
 
 
         self::$view->render_view_admin("inscrit/modal_inscrit");
         exit();
     }
 
-    public function ville(){
+    static function ville(){
 
         global $wpdb;
         $table_name = $wpdb->prefix. 'miss_inscrit';
@@ -406,7 +408,7 @@ class Inscrit extends Plugin_AdminController{
         exit();
     }
 
-    public function age(){
+    static function age(){
 
         global $wpdb;
         $table_name = $wpdb->prefix. 'miss_inscrit';

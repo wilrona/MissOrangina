@@ -71,7 +71,7 @@
 </div>
 
 <div class="animsition item3 bg-yellow1" data-animsition-in="fade-in-down-sm" data-animsition-out="fade-out-down-sm" data-animsition-in-duration="3000">
-    <h1 id="logo">A PROPOS DE <span id="col">MISS ORANGINA 2015</span>.</h1>
+    <h1 id="logo">A PROPOS DE <span id="col">MISS ORANGINA 2017</span>.</h1>
 
     <div class="container" id="logo" style="height: 560px; overflow-y: auto;">
         <div class="text1" style="width: 100%; font-size: 20px; text-align: left;">
@@ -84,14 +84,14 @@
                     Le concours a pour but de désigner <span id="col">la jeune fille la plus représentative</span> des valeurs essentielles de la marque <span id="col">ORANGINA</span>
 
                 </li>
-                <li>A savoir : La <span id="col">beauté naturelle</span> (Teint et rondeurs africains), l’<span id="col">originalité</span> (Talents, culture),  et  <span id="col">le prestige</span> (chic et et élégance)</li>
+                <li>A savoir : La <span id="col">beauté naturelle</span> (teint et rondeurs africains), l’<span id="col">originalité</span> (talents, culture),  et  <span id="col">le prestige</span> (chic et et élégance)</li>
 
             </ul>
             <h2 id="col">Période de la compétition</h2>
-            <p>Du 14 octobre au 12 décembre 2015</p>
+            <p>Du ... au ...</p>
             <h2 id="col">Etapes de la compétition</h2>
-            <p>Les Casting, ¼ de finale,½ Finale se dérouleront à Douala, Bafoussam et Yaoundé du 14 octobre au 05 décembre 2015
-                La finale aura lieu à Douala pendant le  12 décembre 2015.
+            <p>Les Casting, ¼ de finale,½ Finale se dérouleront à ..., ... et .... du ... au ...
+                La finale aura lieu à Douala pendant le  ...
             </p>
             <?php if(!empty($this->lieu)): ?>
             <h2 id="col">Lieu des castings</h2>
@@ -100,12 +100,12 @@
                     <?php foreach($this->lieu as $lieu): ?>
                     <li>
                         <span id="col">
-                            <?php if($lieu['ville'] == "DA"){
+                            <?php if($lieu['ville'] == "DLA"){
                                 echo 'Douala';
-                            }elseif($lieu['ville'] == "YE"){
+                            }elseif($lieu['ville'] == "YDE"){
                                 echo 'Yaounde';
                             }else{
-                                echo 'Bafoussam';
+                                echo 'Buea';
                             } ?> :
                         </span>
                         le <?php echo $lieu['datelieu'] ?> à <?php echo $lieu['lieu'] ?> <?php if(!empty($lieu['heure'])): ?>à partir de <?php echo $lieu['heure']; endif; ?>
@@ -119,11 +119,11 @@
             <h2 id="col">Les conditions de participation</h2>
             <ol>
                 <li>Etre de nationalité camerounaise</li>
-                <li>Etre âgée de 18 ans au moins et 25 ans au plus à la date du casting (Pour les candidates mineures,  se munir d’une autorisation parentale, de la photocopie de la CNI et Acte de naissance du parent)
+                <li>Etre âgée de 18 ans au moins et 25 ans au plus à la date du casting (Pour les candidates mineures,  se munir d’une autorisation parentale, de la photocopie de la CNI et acte de naissance du parent)
                 </li>
                 <li>Etre célibataire</li>
-                <li>Ne pas porter de tatouage ni de piercing visibles</li>
-                <li>Ne jamais avoir posé nue ou fait l’objet de publications ou la candidate apparaitrait partiellement
+                <li>Ne pas porter de tatouage, ni de piercing visibles</li>
+                <li>Ne jamais avoir posé nue ou fait l’objet de publications où la candidate apparaitrait partiellement
                     ou totalement dénudée.
                 </li>
                 <li>Ne pas avoir été antérieurement l’égérie ou l’ambassadrice d’une autre marque</li>

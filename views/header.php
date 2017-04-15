@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
     <meta name="description" content="<?php if ( is_single() ) {
         single_post_title('', true);
@@ -52,7 +52,7 @@
             </div>
             <div class="header_menu">
                 <nav class="menu">
-                    <h1 class="menu_title m-show">Miss Orangina 2015</h1>
+                    <h1 class="menu_title m-show">Miss Orangina 2017</h1>
                     <hr class="m-show">
                     <ul class="scroll">
                         <li><a href="<?php echo get_site_url(); ?>">		Accueil</a></li>

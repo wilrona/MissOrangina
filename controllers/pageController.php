@@ -7,6 +7,9 @@
  */
 
 namespace Controller\page;
+
+require_once(ABSPATH . 'wp-content/plugins/MissOrangina/vendor/html2pdf/html2pdf.class.php');
+
 use HTML2PDF;
 use Plugin_Controller;
 
@@ -43,17 +46,20 @@ class pageController extends Plugin_Controller{
         if($codein == null){
             header('location:/');
         }
-
+        
         ob_start();
 
         global $wpdb;
         $table_candidat = $wpdb->prefix. 'miss_inscrit';
-        $this->view->candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE codeins = '".$codein."'",1), ARRAY_A);
-
+        $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE codeins = %s", $codein), ARRAY_A);
+       
+        $this->view->candidat = $candidat;
 
         $this->view->render_view('page/formulaire2', true);
-        $content = ob_get_clean();
-        require_once(ABSPATH . 'wp-content/plugins/MissOrangina/vendor/html2pdf/html2pdf.class.php');
+        $content = ob_get_clean();    
+
+        http_response_code(200);
+        
         try{
             $pdf = new HTML2PDF('P', 'A4', 'fr');
             $pdf->writeHTML($content);

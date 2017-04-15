@@ -38,9 +38,9 @@
 <!--</div>-->
 <?php //endif; ?>
 
-<h2 class="h2">Vidéo</h2>
+<h2 class="h2">Nos vidéos</h2>
 <div>
-    <?php  echo do_shortcode('[yt4wp-playlist playlist_id="PLrnelROL6ozcrlb36oyFiAmqSPvYgp8aP"]'); ?>
+    <?php  echo do_shortcode('[yt4wp-playlist playlist_id="PLrnelROL6oze04SCpZX3kbQACkJQUAiSR"]'); ?>
 </div>
 <!--<div class="video">-->
 <!--    <i class="fa fa-play icon"></i>-->
@@ -48,6 +48,6 @@
 <hr/>
 <h2 class="h2">Retrouvez-nous sur Facebook</h2>
 <p>
-<div class="fb-page" data-href="https://www.facebook.com/oranginacameroon" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/orangina"><a href="https://www.facebook.com/orangina">Orangina</a></blockquote></div></div>
+<div class="fb-page" data-href="https://www.facebook.com/MissOranginaLaPage" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/orangina"><a href="https://www.facebook.com/orangina">Orangina</a></blockquote></div></div>
 </p>
     

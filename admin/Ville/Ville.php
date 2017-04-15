@@ -12,7 +12,7 @@ class Ville extends Plugin_AdminController{
     public  function __construct(){
         parent::__construct(__CLASS__, 'add_menu_casting');
     }
-    public function add_menu_casting(){
+    static function add_menu_casting(){
         $menu = array(
             array(
                 'submenu' => array(

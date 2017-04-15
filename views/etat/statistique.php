@@ -21,7 +21,7 @@
         <tr>
             <td style="width: 30%;"></td>
             <td style="width: 39%; text-align: center;">
-                <h3>Miss Orangina 2015</h3>
+                <h3>Miss Orangina 2017</h3>
                 STATISTIQUE DES INSCRIPTIONS
 
             </td>
@@ -74,12 +74,7 @@
             <tr>
                 <td style="border-right: 1px solid #9d9d9d;">
                     <strong>
-                        <?php
-                        foreach ($this->villes as $villes) {
-                            if($villes['id'] == $ville['ville']){
-                                echo $villes['ville'];
-                            }
-                        }?>
+                        <?= $ville['ville']; ?>
                     </strong>
                 </td>
                 <td style="border-left: 1px solid #9d9d9d;">

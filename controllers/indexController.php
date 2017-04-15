@@ -53,7 +53,7 @@ class IndexController extends Plugin_Controller {
         }
 
         $table_ville = $wpdb->prefix.'miss_ville';
-        $this->view->villes = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_ville WHERE 1", 1), ARRAY_A);
+        $this->view->villes = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_ville WHERE %d", 1), ARRAY_A);
 
         $table_lieu = $wpdb->prefix. 'miss_lieu';
 

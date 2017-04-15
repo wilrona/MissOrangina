@@ -93,7 +93,7 @@
                 <select class="form-control" name="ville" required="required">
                     <option value="">Selectionne ta ville</option>
                     <?php foreach ($this->ville as $ville):?>
-                        <option value="<?= $ville['id'] ?>" <?php if(isset($this->data['ville']) && $this->data['ville'] == $ville['id']): ?> selected <?php endif; ?>><?= $ville['ville']; ?></option>
+                        <option value="<?= $ville['ville'] ?>" <?php if(isset($this->data['ville']) && $this->data['ville'] == $ville['ville']): ?> selected <?php endif; ?>><?= $ville['ville']; ?></option>
                     <?php endforeach; ?>
                 </select>
                 <?php if(isset($this->messages['ville'])): ?>
@@ -232,7 +232,7 @@
                 <label>
                             <span class="checkbox-form">
                                 <input type="checkbox" id="regle" required="required">
-                                Je confirme que j'ai bien lu  <a href="<?php echo get_site_url()."/reglement"; ?>" target="_blank" id="col" class="link">le règlement du concours miss orangina 2015 </a> et je l'accepte en toute bonne conscience
+                                Je confirme que j'ai bien lu  <a href="<?php echo get_site_url()."/reglement"; ?>" target="_blank" id="col" class="link">le règlement du concours miss orangina 2017 </a> et je l'accepte en toute bonne conscience
                             </span>
                 </label>
             </div>

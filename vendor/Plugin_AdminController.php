@@ -24,7 +24,7 @@ class Plugin_AdminController{
      *      submenu: est un tableau des sous menus que nous voulons initialiser
      * @param array $items
      */
-    public function menu_page_admin($items = array()){
+    static function menu_page_admin($items = array()){
         foreach ($items as $item){
             if(!isset($item['no_menu_page']) || $item['no_menu_page'] == false){
                 add_menu_page($item['page_title'], $item['menu_title'], $item['capability'], $item['menu_slug'], $item['function'], $item['icon_url'], $item['position']);
@@ -37,18 +37,18 @@ class Plugin_AdminController{
         }
     }
 
-    function set_thickbox(){
+    static function set_thickbox(){
         add_action("admin_print_scripts", array(__CLASS__, 'js_libs'));
         add_action("admin_print_styles", array(__CLASS__, 'style_libs'));
     }
 
 
-    function js_libs() {
+    static function js_libs() {
         wp_enqueue_script('jquery');
         wp_enqueue_script('thickbox');
     }
 
-    function style_libs() {
+    static function style_libs() {
         wp_enqueue_style('thickbox');
     }
 

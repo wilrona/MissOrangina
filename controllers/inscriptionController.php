@@ -20,10 +20,11 @@ require "facebookController.php";
 class inscriptionController extends Plugin_Controller {
 
     public static $fbs;
+
     function __construct(){
         parent::__construct();
         $fbs = new facebookController();
-        self::$fbs = $fbs->get_fb();
+        self::$fbs = $fbs->set_facebook();
     }
 
 
@@ -40,7 +41,7 @@ class inscriptionController extends Plugin_Controller {
     function likeAction(){
 
         if(isset($_SESSION) && isset($_SESSION['token_fb'])){
-
+            
             $this->view->render_view('inscription/like');
 
         }else{
@@ -54,7 +55,6 @@ class inscriptionController extends Plugin_Controller {
         global $wpdb;
 
         if(isset($_SESSION) && isset($_SESSION['token_fb'])){
-
             self::$fbs->setDefaultAccessToken($_SESSION['token_fb']);
             try {
                 $response = self::$fbs->get('/me?locale=en_US&fields=id,first_name,last_name,email,gender');
@@ -86,9 +86,9 @@ class inscriptionController extends Plugin_Controller {
 
 
             # SELECT v.* FROM miss_lieu as l, miss_ville as v WHERE l.ville = v.id AND l.passe = 0 AND l.etape = 1
-            $this->view->ville = $wpdb->get_results($wpdb->prepare("SELECT v.* FROM $table_ville as v, $table_lieu as l WHERE l.ville = v.id AND l.passe = 0 AND l.etape = 1 GROUP  BY  v.ville", 1), ARRAY_A);
+            $this->view->ville = $wpdb->get_results($wpdb->prepare("SELECT v.* FROM $table_ville as v, $table_lieu as l WHERE l.ville = v.id AND l.passe = 0 AND l.etape = %d GROUP  BY  v.ville", 1), ARRAY_A);
 
-            if(wp_verify_nonce($_POST['nonce'], "inscription") && isset($_POST)) {
+            if(isset($_POST) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], "inscription")  ) {
 
                 $data = array(
                     'id' => null,
@@ -126,7 +126,7 @@ class inscriptionController extends Plugin_Controller {
                 if(empty($data['dateNais'])){
                     $messages['dateNais']="la date de naissance est obligatoire";
                 }else{
-                    list($jour, $mois, $annee) = split('[/.]', $data['dateNais']);
+                    list($jour, $mois, $annee) = preg_split('[/.]', $data['dateNais']);
                     $today['mois'] = date('n');
                     $today['jour'] = date('j');
                     $today['annee'] = date('Y');
@@ -164,7 +164,7 @@ class inscriptionController extends Plugin_Controller {
                 if(empty($messages)) $no_message = true;
 
                 if($no_message === true){
-                    $ville_candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_ville WHERE id = %d", $data["ville"]), ARRAY_A);
+                    $ville_candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_ville WHERE ville = %s", $data["ville"]), ARRAY_A);
                     $data['codeins'] = $ville_candidat['abreviation']."".self::random(4);
                     list($jour, $mois, $annee ) = sscanf($data['dateNais'], "%d/%d/%d");
                     $strconvert =  strtotime($annee .'-'. $mois .'-'. $jour .'');
@@ -172,11 +172,11 @@ class inscriptionController extends Plugin_Controller {
 
                     $data["datecreate"] = current_time('mysql');
 
-                    $exist = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table_candidat WHERE idfacebook = %d", $data["idfacebook"]));
+                    $exist = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table_candidat WHERE idfacebook = %s", $data["idfacebook"]));
 
                     if($exist){
                         $result = true;
-                        $exist_candidat = $wpdb->get_var($wpdb->prepare("SELECT * FROM $table_candidat WHERE idfacebook = %d", $data["idfacebook"]), ARRAY_A);
+                        $exist_candidat = $wpdb->get_var($wpdb->prepare("SELECT * FROM $table_candidat WHERE idfacebook = %s", $data["idfacebook"]), ARRAY_A);
                         $data["id"] = $exist_candidat['id'];
 
                         $exist_email = $wpdb->get_var("SELECT COUNT(*) FROM $table_parrain WHERE email = '".$exist_candidat['email']."'");
@@ -199,16 +199,16 @@ class inscriptionController extends Plugin_Controller {
                         $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE id = %d", $data["id"]), ARRAY_A);
 
                         $table_lieu = $wpdb->prefix. 'miss_lieu';
-                        $lieu = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_lieu WHERE ville = '".$data['ville']."'",1), ARRAY_A);
+                        $lieu = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_lieu WHERE ville = %d",$ville_candidat['id']), ARRAY_A);
 
 
                         $msg = "<html><body>";
                         $msg .= "Bonjour, ".$candidat['nom']." ".$candidat['prenom']."<br/>";
-                        $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2015.";
+                        $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2017.";
                         $msg .= " Nous vous invitons à imprimer votre formulaire d’inscription en cliquant sur le lien ci-dessous et à vous présenter au casting qui aura lieu <strong>";
-                        $msg .= " à ".$lieu['lieu']." ".$lieu['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " </strong> munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
-                        $msg .= "Si vous êtes âgée de moins de 21 ans, veuillez aussi imprimer, faire signer l'autorisation parentale par votre père ou tuteur légal et joindre les photocopies de la CNI. <br>";
-                        $msg .= "Si vous avez une carte scolaire, venez avec la photocopie de votre acte de naissance. Surtout faites vous accompagner de votre père ou tuteur légal au casting.<br>";
+                        $msg .= " au ".$lieu['lieu']." à ".$candidat['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " </strong> munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
+                        $msg .= "Si vous êtes âgée de moins de 21 ans révolu au jour du casting, veuillez aussi imprimer, faire signer l'autorisation parentale par votre père ou tuteur légal et la faire légaliser auprès des autorités compétentes. <br>";
+                        $msg .= "A ce document, bien vouloir joindre les photocopies de votre CNI. <br>Si votre parent est dans l'impossibilité de légaliser l'autorisation parentale au préalable, il peut la signer au lieu du casting ou avant ce jour en se rendant au siège de l'agence ACCENT COM (367, Rue Paul Monthé-Rue UTA, Bonapriso, Douala).<br> Si vous envisanger de présenter une carte d'identité scolaire, veuillez ramener la photocopie de votre acte de naissance. <br>";
                         $msg .= "Cliquez sur ce lien : <br> <a href='".plugins_url('assets/doc/AUTORISATION_PARENTALE_MO_2015.doc', PLUGINS_DIR_CURRENT )."'> Télécharger l'autorisation parentale</a> / ";
                         $msg .= " <a href='".get_site_url()."/page/formulaire/".$candidat['codeins']."'>télécharger mon formulaire d'inscription </a> <br>";
                         $msg .= "Infoline: 695 95 95 70 <br>";
@@ -222,7 +222,7 @@ class inscriptionController extends Plugin_Controller {
                         wp_mail($candidat['email'], 'Inscription Reussie', $msg, $header);
 
                         remove_filter ('wp_mail_content_type', array(__CLASS__, 'set_html_content_type'));
-
+                                                      
                         wp_redirect(get_site_url()."/inscription/parrain");
 
 
@@ -235,7 +235,7 @@ class inscriptionController extends Plugin_Controller {
 
             }
 
-            $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE idfacebook = '%d'", $userNode->getField('id')), ARRAY_A);
+            $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE idfacebook = %s", $userNode->getField('id')), ARRAY_A);
 
             if($candidat){
 
@@ -343,7 +343,7 @@ class inscriptionController extends Plugin_Controller {
 //
 //            // convertion d'un string date en Date
 //
-//            list($annee, $mois, $jour) = split('[-.]', $data['dateNais']);
+//            list($annee, $mois, $jour) = preg_split('[-.]', $data['dateNais']);
 //            $today['mois'] = date('n');
 //            $today['jour'] = date('j');
 //            $today['annee'] = date('Y');
@@ -376,7 +376,7 @@ class inscriptionController extends Plugin_Controller {
 //
 //                    $msg = "<html><body>";
 //                    $msg .= "Bonjour<br/>";
-//                    $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2015.";
+//                    $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2017.";
 //                    $msg .= " Nous vous invitons à imprimer votre formulaire d’inscription en cliquant sur le lien ci-dessous et à vous présenter au casting qui aura lieu";
 //                    $msg .= " à ".$lieu['lieu']." ".$lieu['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
 //                    $msg .= "Si vous êtes âgée de moins de 21 ans, veuillez aussi imprimer, faire signer l'autorisation parentale par l'un de vos parents et joindre les photocopies de la CNI et de l'acte de naissance du parent. Si vous avez une carte scolaire, venez avec la photocopie de votre acte de naissance <br>";
@@ -449,11 +449,11 @@ class inscriptionController extends Plugin_Controller {
             $table_name = $wpdb->prefix. 'miss_parrain';
 
             $table_candidat = $wpdb->prefix. 'miss_inscrit';
-            $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE idfacebook = %d", $userNode->getField('id')), ARRAY_A);
+            $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_candidat WHERE idfacebook = %s", $userNode->getField('id')), ARRAY_A);
 
 
 
-            if (wp_verify_nonce($_POST['nonce'], "parrain") && isset($_POST)){
+            if (isset($_POST) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], "parrain")  ){
 
                 $parrains = $_POST['parrain'];
                 foreach($parrains as $parrain){
@@ -472,7 +472,7 @@ class inscriptionController extends Plugin_Controller {
                     }else{
                         $msg = "<html><body>";
                         $msg .= "Bonjour,<br>";
-                        $msg .= "Votre ami(e) <b>".$candidat['nom']." ".$candidat['prenom']."</b> vous invite à la soutenir pour le concours Miss Orangina 2015. <br>";
+                        $msg .= "Votre ami(e) <b>".$candidat['nom']." ".$candidat['prenom']."</b> vous invite à la soutenir pour le concours Miss Orangina 2017. <br>";
                         $msg .= 'Cliquez sur ce lien pour accéder au site <a href="http://www.missorangina-cm.com">missorangina-cm.com</a><br>';
                         $msg .= "L’équipe Orangina";
                         $msg .= "</html></body>";
@@ -505,7 +505,7 @@ class inscriptionController extends Plugin_Controller {
             }
 
             if($candidat){
-                $emails = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE 1 idcandidat = %d", $candidat['id']), ARRAY_A);
+                $emails = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE idcandidat = %d", $candidat['id']), ARRAY_A);
                 $set_email = array();
                 foreach($emails as $i => $item){
                     $set_email[$i] = $item['email'];
@@ -526,22 +526,23 @@ class inscriptionController extends Plugin_Controller {
 
         $table_name = $wpdb->prefix. 'miss_inscrit';
         if($codeins == null):
-            $candidats = $wpdb->get_results($wpdb->prepare("SELECT *, YEAR(CURDATE())-YEAR(dateNais) as Age FROM $table_name WHERE email IS NOT NULL HAVING Age >= 17 AND Age <= 25", 1), ARRAY_A);
+            $candidats = $wpdb->get_results($wpdb->prepare("SELECT *, YEAR(CURDATE())-YEAR(dateNais) as Age FROM $table_name WHERE email IS NOT NULL HAVING Age >= %d AND Age <= %d", 17, 25), ARRAY_A);
 
             foreach ($candidats as $candidat) {
-
+                $table_ville = $wpdb->prefix. 'miss_ville';
+                $ville_candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_ville WHERE ville = %s", $candidat["ville"]), ARRAY_A);
+                
                 $table_lieu = $wpdb->prefix. 'miss_lieu';
-                $lieu = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_lieu WHERE ville = '".$candidat['ville']."'",1), ARRAY_A);
-
+                $lieu = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_lieu WHERE ville = %d", $ville_candidat['id']), ARRAY_A);
 
                 $msg = "<html><body>";
                 $msg .= "Bonjour, ".$candidat['nom']." ".$candidat['prenom']."<br/>";
-                $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2015.";
+                $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2017.";
                 $msg .= " Nous vous invitons à imprimer votre formulaire d’inscription en cliquant sur le lien ci-dessous et à vous présenter au casting qui aura lieu <strong>";
-                $msg .= " à ".$lieu['lieu']." ".$lieu['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " </strong> munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
-                $msg .= "Si vous êtes âgée de moins de 21 ans, veuillez aussi imprimer, faire signer l'autorisation parentale par votre père ou tuteur légal et joindre les photocopies de la CNI. <br>";
-                $msg .= "Si vous avez une carte scolaire, venez avec la photocopie de votre acte de naissance. Surtout faites vous accompagner de votre père ou tuteur légal au casting.<br>";
-                $msg .= "Cliquez sur ce lien : <br> <a href='". plugins_url('assets/doc/AUTORISATION_PARENTALE_MO_2015.doc', PLUGINS_DIR_CURRENT )."'> télécharger l'autorisation parentale</a> / ";
+                $msg .= " au ".$lieu['lieu']." à ".$candidat['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " </strong> munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
+                $msg .= "Si vous êtes âgée de moins de 21 ans révolu au jour du casting, veuillez aussi imprimer, faire signer l'autorisation parentale par votre père ou tuteur légal et la faire légaliser auprès des autorités compétentes. <br>";
+                $msg .= "A ce document, bien vouloir joindre les photocopies de votre CNI. <br>Si votre parent est dans l'impossibilité de légaliser l'autorisation parentale au préalable, il peut la signer au lieu du casting ou avant ce jour en se rendant au siège de l'agence ACCENT COM (367, Rue Paul Monthé-Rue UTA, Bonapriso, Douala).<br> Si vous envisanger de présenter une carte d'identité scolaire, veuillez ramener la photocopie de votre acte de naissance. <br>";
+                $msg .= "Cliquez sur ce lien : <br> <a href='".plugins_url('assets/doc/AUTORISATION_PARENTALE_MO_2015.doc', PLUGINS_DIR_CURRENT )."'> Télécharger l'autorisation parentale</a> / ";
                 $msg .= " <a href='".get_site_url()."/page/formulaire/".$candidat['codeins']."'>télécharger mon formulaire d'inscription </a> <br>";
                 $msg .= "Infoline: 695 95 95 70 <br>";
                 $msg .= "L’équipe Orangina";
@@ -559,20 +560,23 @@ class inscriptionController extends Plugin_Controller {
             }
         else:
 
-            $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE codeins = '".$codeins."'", 1), ARRAY_A);
+            $candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE codeins = %s", $codeins), ARRAY_A);
+
+            $table_ville = $wpdb->prefix. 'miss_ville';
+            $ville_candidat = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_ville WHERE ville = %s", $candidat["ville"]), ARRAY_A);
 
             $table_lieu = $wpdb->prefix. 'miss_lieu';
-            $lieu = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_lieu WHERE ville = '".$candidat['ville']."'",1), ARRAY_A);
+            $lieu = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_lieu WHERE ville = %d",$ville_candidat['id']), ARRAY_A);
 
 
             $msg = "<html><body>";
             $msg .= "Bonjour, ".$candidat['nom']." ".$candidat['prenom']."<br/>";
-            $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2015.";
+            $msg .= "Nous vous remercions pour votre inscription à notre concours Miss Orangina 2017.";
             $msg .= " Nous vous invitons à imprimer votre formulaire d’inscription en cliquant sur le lien ci-dessous et à vous présenter au casting qui aura lieu <strong>";
-            $msg .= " à ".$lieu['lieu']." ".$lieu['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " </strong> munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
-            $msg .= "Si vous êtes âgée de moins de 21 ans, veuillez aussi imprimer, faire signer l'autorisation parentale par votre père ou tuteur légal et joindre les photocopies de la CNI. <br>";
-            $msg .= "Si vous avez une carte scolaire, venez avec la photocopie de votre acte de naissance. Surtout faites vous accompagner de votre père ou tuteur légal au casting.<br>";
-            $msg .= "Cliquez sur ce lien : <br> <a href='". get_template_directory_uri()."/doc/AUTORISATION_PARENTALE_MO_2015.doc'> télécharger l'autorisation parentale</a> / ";
+            $msg .= " au ".$lieu['lieu']." à ".$candidat['ville']." le ".$lieu['datelieu']. " à partir de ".$lieu['heure']. " </strong> munie de votre carte nationale d’identité ou de votre carte d'identité scolaire. <br>";
+            $msg .= "Si vous êtes âgée de moins de 21 ans révolu au jour du casting, veuillez aussi imprimer, faire signer l'autorisation parentale par votre père ou tuteur légal et la faire légaliser auprès des autorités compétentes. <br>";
+            $msg .= "A ce document, bien vouloir joindre les photocopies de votre CNI. <br>Si votre parent est dans l'impossibilité de légaliser l'autorisation parentale au préalable, il peut la signer au lieu du casting ou avant ce jour en se rendant au siège de l'agence ACCENT COM (367, Rue Paul Monthé-Rue UTA, Bonapriso, Douala).<br> Si vous envisanger de présenter une carte d'identité scolaire, veuillez ramener la photocopie de votre acte de naissance. <br>";
+            $msg .= "Cliquez sur ce lien : <br> <a href='".plugins_url('assets/doc/AUTORISATION_PARENTALE_MO_2015.doc', PLUGINS_DIR_CURRENT )."'> Télécharger l'autorisation parentale</a> / ";
             $msg .= " <a href='".get_site_url()."/page/formulaire/".$candidat['codeins']."'>télécharger mon formulaire d'inscription </a> <br>";
             $msg .= "Infoline: 695 95 95 70 <br>";
             $msg .= "L’équipe Orangina";
@@ -601,11 +605,11 @@ class inscriptionController extends Plugin_Controller {
         $this->view->render_view('inscription/confirmation');
     }
 
-    public function set_html_content_type(){
+    static function set_html_content_type(){
         return 'text/html';
     }
 
-    function custom_wp_mail_from_name( $original_email_from ) {
+    static function custom_wp_mail_from_name( $original_email_from ) {
         return 'L\'équipe Orangina';
     }
 

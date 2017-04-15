@@ -9,7 +9,7 @@
         <tr>
             <td style="width: 33%;"></td>
             <td style="width: 33%; text-align: center;">
-                <h3>Miss Orangina 2015</h3>
+                <h3>Miss Orangina 2017</h3>
                 FORMULAIRE D’INSCRIPTION ET QUESTIONNAIRE
 
             </td>
@@ -60,12 +60,12 @@
             <td style="padding: 10px 0; width: 50%;"><b>VILLE</b></td>
             <td style="width: 50%;">
                 <?php
-                    if($this->candidat['ville'] == "DA"){
+                    if($this->candidat['ville'] == "DLA"){
                         echo 'Douala';
-                    }elseif($this->candidat['ville'] == "YE"){
+                    }elseif($this->candidat['ville'] == "YDE"){
                         echo 'Yaounde';
                     }else{
-                        echo 'Bafoussam';
+                        echo 'Buea';
                     }
                 ?>
             </td>

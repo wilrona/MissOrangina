@@ -2,13 +2,13 @@
 
 <div class="l-container">
     <div class="body_left">
-        <h2 class="h2"><small>Candidates</small> Miss Orangina 2015 </h2>
+        <h2 class="h2"><small>Candidates</small> Miss Orangina 2017 </h2>
         <?php  if($this->etape == 4):?>
         <div class="concept clearfix" style="text-align: center;">
             <br/>
-            <h3>Votez avec votre compte Facebook</h3>
+            <!--<h3>Votez avec votre compte Facebook</h3>
 
-            <br/>
+            <br/>-->
         </div>
         <br/>
         <?php endif; ?>
@@ -54,53 +54,50 @@
                                                         </p>
                                                     </div>
                                                     <div class="footer clearfix">
-                                                        <?php
-                                                            if($this->etape == 4):
-                                                        ?>
-                                                        <div class="vote">
+                                                        <?php if($this->etape == 4): ?>
+                                                        <!--<div class="vote">
                                                             <span class="right">Votes</span>
                                                             <span class="left">
                                                                 <?php
-                                                                $exist = false;
+/*                                                                $exist = false;
                                                                 foreach ($this->candidat_vote as $vote):
                                                                     if($vote['idcandidat'] == $candidat['id']):
                                                                         $exist = true;
-                                                                        ?>
-                                                                        <?= $vote['nbr'] ?>
+                                                                        */?>
+                                                                        <?/*= $vote['nbr'] */?>
 
                                                                     <?php
-
+/*
                                                                     endif; endforeach;
 
                                                                 if($exist == false){
                                                                     echo '0';
                                                                 }
 
-                                                                ?>
+                                                                */?>
 
                                                                 </span>
 
-                                                        </div>
+                                                        </div>-->
 
                                                         <?php
-                                                            else:
+                                                        else:
+                                                            if($candidat['gagnant'] == 1){
+                                                                $passage = 'Miss Orangina';
+                                                            }
+                                                            if($candidat['gagnant'] == 2){
+                                                                $passage = '1ere Dauphine';
+                                                            }
+                                                            if($candidat['gagnant'] == 3){
+                                                                $passage = '2eme Dauphine';
+                                                            }
+                                                            if($candidat['gagnant'] == 4){
+                                                                $passage = '3eme Dauphine';
+                                                            }
 
-                                                                if($candidat['gagnant'] == 1){
-                                                                    $passage = 'Miss Orangina';
-                                                                }
-                                                                if($candidat['gagnant'] == 2){
-                                                                    $passage = '1ere Dauphine';
-                                                                }
-                                                                if($candidat['gagnant'] == 3){
-                                                                    $passage = '2eme Dauphine';
-                                                                }
-                                                                if($candidat['gagnant'] == 4){
-                                                                    $passage = '3eme Dauphine';
-                                                                }
+                                                           echo $passage;
 
-                                                               echo $passage;
-                                                            endif;
-                                                        ?>
+                                                        endif; ?>
 
                                                     </div>
                                                 </div>
@@ -111,9 +108,9 @@
                                                         <h4 class="name"><?= $candidat['nom'] ?> <?= $candidat['prenom'] ?></h4>
                                                         <hr>
 <!--                                                        <a href="--><?php //echo get_site_url(); ?><!--/vote/profil/--><?php //echo $candidat['id'];  ?><!--" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-primary">Details</a>-->
-                                                        <?php if($this->etape == 4): ?>
-                                                            <a href="<?php echo get_site_url(); ?>/facebook/vote/<?php echo $candidat['id'];  ?>" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-contact">Votez ici</a>
-                                                        <?php endif; ?>
+                                                       <!-- <?php /*if($this->etape == 4): */?>
+                                                            <a href="<?php /*echo get_site_url(); */?>/facebook/vote/<?php /*echo $candidat['id'];  */?>" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-contact">Votez ici</a>
+                                                        --><?php /*endif; */?>
                                                         <?php if($this->etape == 5): ?>
                                                         <span class="name" style=" background: url('<?= plugins_url( 'assets/img/logo.png', PLUGINS_DIR_CURRENT ); ?>') no-repeat center; width: 100%;height: 125px;display: block;background-size: 100px;"></span>
                                                         <span class="name" style="font-size: 21px;font-weight: bold;font-family: Flavour; color:#004899;">

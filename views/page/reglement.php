@@ -84,13 +84,13 @@
             <h2 id="col">ARTICLE   1 : Objectif et Durée du jeu concours</h2>
             <p>SABC organise un grand concours national amateur de beauté dénommé <span id="col">« MISS ORANGINA»</span> et ayant pour objectif de désigner la jeune fille la plus représentative des valeurs essentielles de la marque Orangina à savoir: La beauté naturelle, l’originalité, le prestige, l’élégance et la capacité à communiquer des messages clés au grand public.
 
-                <br/>Le concours s’étend sur la période allant du <span id="col">24 Septembre au 12 Décembre 2015</span>.
+                <br/>Le concours s’étend sur la période allant du <span id="col">... au ... </span>.
 
                 <br/>L’organisateur se réserve le droit d’avancer, de retarder ou de proroger la date de lancement ou la durée de ce jeu concours en avisant à l’avance le public.
             </p>
 
             <h2 id="col">ARTICLE 2 : Territoire</h2>
-            <p>Le concours couvre uniquement les villes de Douala, Yaoundé et Bafoussam.
+            <p>Le concours couvre uniquement les villes de Douala, Yaoundé et Buéa.
             </p>
 
             <h2 id="col">ARTICLE 3 : Participation au jeu concours</h2>
@@ -134,8 +134,8 @@
             <p>
                 Pour l’édition 2015 du jeu concours « MISS ORANGINA», la compétition se déroulera en 04 étapes :
                 <ul>
-                    <li>1ère étape : le  casting qui se tiendra dans les villes de Douala, Yaoundé et Bafoussam, à raison d’un casting par ville.</li>
-                    <li>2ème étape : les éliminatoires (Trois ¼ de finales) qui se dérouleront également à Douala, Yaoundé et Bafoussam, à raison de 01 séance  par ville, selon un planning qui sera communiqué aux présélectionnées ;</li>
+                    <li>1ère étape : le  casting qui se tiendra dans les villes de Douala, Yaoundé et Buéa, à raison d’un casting par ville.</li>
+                    <li>2ème étape : les éliminatoires (Trois ¼ de finales) qui se dérouleront également à Douala, Yaoundé et Buéa, à raison de 01 séance  par ville, selon un planning qui sera communiqué aux présélectionnées ;</li>
                     <li>3ème étape : la  demi-finale à raison d’une demi-finale par ville, dont la date et le lieu seront communiqués aux présélectionnées ;</li>
                     <li>4ème et dernière étape : la finale nationale qui se déroulera le 12 décembre au Castel Hall à Douala.</li>
 

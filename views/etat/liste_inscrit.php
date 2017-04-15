@@ -18,13 +18,13 @@
 </style>
 <page backtop="7mm" backbottom="7mm" backleft="10mm" backright="10mm">
     <page_footer>
-       Miss Orangina 2015: listes des inscriptions <?php echo $this->phase; ?> <?php if(isset($this->enattente)){ echo $this->enattente; }?> [[page_cu]]/[[page_nb]]
+       Miss Orangina 2017: listes des inscriptions <?php echo $this->phase; ?> <?php if(isset($this->enattente)){ echo $this->enattente; }?> [[page_cu]]/[[page_nb]]
     </page_footer>
     <table>
         <tr>
             <td style="width: 31.5%;"></td>
             <td style="width: 39%; text-align: center;">
-                <h3>Miss Orangina 2015</h3>
+                <h3>Miss Orangina 2017</h3>
                 LISTE DES INSCRIPTIONS <?php echo $this->phase; ?> <br/><strong><?php if(isset($this->enattente)){ echo $this->enattente; }?></strong>
 
             </td>
@@ -68,12 +68,9 @@
                 <?php echo $inscrit['phone'] ?>
             </td>
             <td style="width: 10%;border-right: 1px solid #000;">
-                <?php
-                foreach ($this->villes as $villes) {
-                    if($villes['id'] == $inscrit['ville']){
-                        echo $villes['ville'];
-                    }
-                }?>
+                <?=
+                $inscrit['ville'];
+                ?>
             </td>
         </tr>
         <?php endforeach; ?>

@@ -1,4 +1,4 @@
-<?php header("Access-Control-Allow-Origin: *"); ?>
+<?php header("Access-Control-Allow-Origin: *"); http_response_code(200);?>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h1 class="modal-title">Profil du candidat</h1>

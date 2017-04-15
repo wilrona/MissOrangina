@@ -32,21 +32,27 @@
     <tr>
         <td>
             <strong>
-                <?php
-                foreach ($this->villes as $villes) {
-                        if($villes['id'] == $ville['ville']){
-                            echo $villes['ville'];
-                        }
-                }?>
+                <?=
+                $ville['ville'];
+                ?>
             </strong>
         </td>
         <td>
             <a class="button" href="<?php
+            
+            //Conversion des majuscules en minuscule
+            $string = strtolower(htmlentities($ville['ville'])); 
+            //Listez ici tous les balises HTML que vous pourriez rencontrer
+            $string = preg_replace("/&(.)(acute|cedil|circ|ring|tilde|uml|grave);/", "$1", $string); 
+            //Tout ce qui n'est pas caractère alphanumérique  -> _
+            $string = preg_replace("/([^a-z0-9]+)/", "_", html_entity_decode($string)); 
+
+
             if($this->classement){
-                echo get_site_url()."/etat/classementville/".$ville['ville']."".$this->phase;
+                echo get_site_url()."/etat/classementville/".$string."".$this->phase;
             }else{
 
-                echo get_site_url()."/etat/parville/".$ville['ville']."".$this->phase;
+                echo get_site_url()."/etat/parville/".$string."".$this->phase;
             }
             ?>
 

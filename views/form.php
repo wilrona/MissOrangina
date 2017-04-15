@@ -112,7 +112,7 @@
                                 <option value="">Selectionne ta ville</option>
                                 <option value="Dla">Douala</option>
                                 <option value="Dde">Yaounde</option>
-                                <option value="Baf">Bafoussam</option>
+                                <option value="Baf">Buea</option>
                             </select>
                         </div>
                     </div>

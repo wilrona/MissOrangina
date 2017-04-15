@@ -49,11 +49,11 @@ class ContactController extends Plugin_Controller{
         $this->view->render_view('contact/confirmation');
     }
 
-    public function set_html_content_type(){
+    static function set_html_content_type(){
         return 'text/html';
     }
 
-    function custom_wp_mail_from_name( $original_email_from ) {
+    static function custom_wp_mail_from_name( $original_email_from ) {
         return 'Le site Miss Orangina';
     }
 }

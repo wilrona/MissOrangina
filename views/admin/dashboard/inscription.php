@@ -45,12 +45,7 @@
                 <tr>
                     <td>
                         <strong>
-                            <?php
-                            foreach ($this->villes as $villes) {
-                                if($villes['id'] == $ville['ville']){
-                                    echo $villes['ville'];
-                                }
-                            }?>
+                            <?= $ville['ville']; ?>
                         </strong>
                     </td>
                     <td style="border-left: 1px solid #9d9d9d;">

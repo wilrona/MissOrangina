@@ -67,7 +67,7 @@ class List_View_Inscrit extends WP_List_Table{
 
     function column_dateNais($item)
     {
-        list($annee, $mois, $jour) = split('[-.]', $item['dateNais']);
+        list($annee, $mois, $jour) = preg_split('[-.]', $item['dateNais']);
         $today['mois'] = date('n');
         $today['jour'] = date('j');
         $today['annee'] = date('Y');

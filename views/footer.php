@@ -33,8 +33,8 @@
                         <div class="foot">
                             <ul class="ul-list-inline">
                                 <li>All Copyrights Reserved |</li>
-                                <li>2015 |</li>
-                                <li><a href="http://www.accentcom-cm.com/" style="color: #fff; font-family: 'Verdana', Georgia, serif;" target="_blank">Accent Com</a></li>
+                                <li>2017 |</li>
+                                <li><a href="http://www.accentcom.agency/" style="color: #fff; font-family: 'Verdana', Georgia, serif;" target="_blank">Accent Com</a></li>
                             </ul>
                             <br>
                         </div>

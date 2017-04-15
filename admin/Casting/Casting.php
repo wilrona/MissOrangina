@@ -15,7 +15,7 @@ class Casting extends Plugin_AdminController{
         parent::__construct(__CLASS__, 'add_menu_casting');
     }
 
-    public function add_menu_casting(){
+    static function add_menu_casting(){
         $menu = array(
             array(
                 'page_title' => 'Liste des lieux',
@@ -91,7 +91,7 @@ class Casting extends Plugin_AdminController{
                 $_REQUEST['id'] = $wpdb->insert_id;
                 if($result) {
 
-                    self::$view->message = "Votre lieu a été enregistrée avec succes";
+                    self::$view->message = "Votre lieu a été enregistré avec succes";
 
                 } else {
 
@@ -122,7 +122,7 @@ class Casting extends Plugin_AdminController{
                 self::$view->notice = "Information Introuvable";
             }
         }
-        self::$view->ville = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_ville WHERE 1", 0), ARRAY_A);
+        self::$view->ville = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_ville WHERE %d", 1), ARRAY_A);
         self::$view->phase = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_phase WHERE etape > %d", 0), ARRAY_A);
 
         self::$view->render_view_admin("casting/form");

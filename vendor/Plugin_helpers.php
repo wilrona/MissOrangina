@@ -15,7 +15,7 @@ class Plugin_Helpers{
     }
 
     public function date_naiss($date){
-        list($annee, $mois, $jour) = split('[-.]', $date);
+        list($annee, $mois, $jour) = preg_split('[-.]', $date);
         $today['mois'] = date('n');
         $today['jour'] = date('j');
         $today['annee'] = date('Y');

@@ -17,7 +17,7 @@
             </ul><br>
             <div id="myTabContent-kv-11" class="tab-content">
                 <div class="tab-pane fade" id="home-1">
-                    <h3 style="text-align: center; text-decoration: underline;">Votez avec votre compte Facebook</h3>
+                    <!--<h3 style="text-align: center; text-decoration: underline;">Votez avec votre compte Facebook</h3>-->
 <!--                    debut du contenu des candidates-->
                     <div class="tabs-x-2 tab-align-center tabs-above">
                         <ul id="myTab-kv-11-2" class="nav nav-tabs" role="tablist"  style="background: none; padding: 0;">
@@ -55,31 +55,31 @@
                                                                         <!--                                                        <p class="profession">--><?//= $candidat['Age'] ?><!-- ans</p>-->
                                                                     </div>
                                                                     <div class="footer clearfix">
-                                                                        <div class="vote">
+                                                                        <!--<div class="vote">
                                                                             <span class="right">Votes</span>
-                                                            <span class="left">
-                                                                <?php
-                                                                $exist = false;
-                                                                foreach ($this->candidat_vote as $vote):
-                                                                    if($vote['idcandidat'] == $candidat['id']):
-                                                                        $exist = true;
-                                                                        ?>
-                                                                        <?= $vote['nbr'] ?>
+                                                                                <span class="left">
+                                                                                    <?php
+                                                                                    $exist = false;
+                                                                                    foreach ($this->candidat_vote as $vote):
+                                                                                        if($vote['idcandidat'] == $candidat['id']):
+                                                                                            $exist = true;
+                                                                                            ?>
+                                                                                            <?= $vote['nbr'] ?>
 
-                                                                    <?php
+                                                                                        <?php
 
-                                                                    endif; endforeach;
+                                                                                        endif; endforeach;
 
-                                                                if($exist == false){
-                                                                    echo '0';
-                                                                }
+                                                                                    if($exist == false){
+                                                                                        echo '0';
+                                                                                    }
 
-                                                                ?>
+                                                                                    ?>
 
 
-                                                                </span>
+                                                                                    </span>
 
-                                                                        </div>
+                                                                        </div>-->
 
                                                                     </div>
                                                                 </div>
@@ -91,7 +91,7 @@
                                                                         <hr>
                                                                         <!--                                                        <a href="--><?php //echo get_site_url(); ?><!--/vote/profil/--><?php //echo $candidat['id'];  ?><!--" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-primary">Details</a>-->
                                                                         <!--                                                        <span class="name">OU</span>-->
-                                                                        <a href="<?php echo get_site_url(); ?>/facebook/vote/<?php echo $candidat['id'];  ?>" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-contact">Votez ici</a>
+                                                                        <!--<a href="<?php echo get_site_url(); ?>/facebook/vote/<?php echo $candidat['id'];  ?>" data-toggle="modal" data-target="#myModal" data-backdrop="static" class="btn btn-block btn-contact">Votez ici</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end back panel -->

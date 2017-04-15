@@ -19,15 +19,15 @@ require_once(plugin_dir_path(PLUGINS_DIR_CURRENT).'/vendor/Facebook/autoload.php
 
 class facebookController extends Plugin_Controller {
 
-//    public static $fb;
+   public static $fb;
 
     function __construct(){
         parent::__construct();
-//        self::$fb = new Facebook([
-//                'app_id' => APPID,
-//                'app_secret' => APPSECRET,
-//                'default_graph_version' => APPVERS
-//            ]);
+    //    self::$fb = new Facebook([
+    //            'app_id' => APPID,
+    //            'app_secret' => APPSECRET,
+    //            'default_graph_version' => APPVERS
+    //        ]);
     }
 
 //    function get_fb(){
@@ -50,7 +50,7 @@ class facebookController extends Plugin_Controller {
         $helper = $fb->getRedirectLoginHelper();
 
         $permissions = ['email'];
-        $loginUrl = $helper->getLoginUrl('http://' . $_SERVER['HTTP_HOST'] .'/facebook/login_callback', $permissions);
+        $loginUrl = $helper->getLoginUrl('http://'. $_SERVER['HTTP_HOST'] .'/facebook/login_callback', $permissions);
         $this->view->login = $loginUrl;
         $this->view->render_view('facebook/index', true);
     }
@@ -123,7 +123,7 @@ class facebookController extends Plugin_Controller {
         $helper = self::$fb->getRedirectLoginHelper();
 
         $permissions = ['email'];
-        $loginUrl = $helper->getLoginUrl('http://' . $_SERVER['HTTP_HOST'] .'/facebook/vote_callback/'.$candidat->id, $permissions);
+        $loginUrl = $helper->getLoginUrl('http://'. $_SERVER['HTTP_HOST'] .'/facebook/vote_callback/'.$candidat->id, $permissions);
         $this->view->login = $loginUrl;
 
         $this->view->render_view('vote/profil', true);

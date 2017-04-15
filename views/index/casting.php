@@ -3,7 +3,7 @@
 <div class="l-container">
     <div class="body_left">
 
-        <h2 class="h2"> Les inscriptions se poursuivent
+        <h2 class="h2"> Les inscriptions ont commencé
         </h2>
 
         <!-- tabs -->

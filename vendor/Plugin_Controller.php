@@ -10,7 +10,7 @@
 class Plugin_Controller{
 
     function __construct(){
-        session_start();
+        // session_start();
         $this->view = new Plugin_View();
     }
 

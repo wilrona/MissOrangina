@@ -118,12 +118,12 @@
                                         <hr/>
                                     <?php endif; ?>
                                     <div class="list-group-item active">
-                                        <h1 class="list-group-item-heading"><?php echo $lieu['lieu'] ?> à <?php if($lieu['ville'] == "DA"){
+                                        <h1 class="list-group-item-heading"><?php echo $lieu['lieu'] ?> à <?php if($lieu['ville'] == "DLA"){
                                                 echo 'Douala';
-                                            }elseif($lieu['ville'] == "YE"){
+                                            }elseif($lieu['ville'] == "YDE"){
                                                 echo 'Yaounde';
                                             }else{
-                                                echo 'Bafoussam';
+                                                echo 'Buea';
                                             } ?></h1>
                                         <p class="list-group-item-text">
                                             <?php echo $lieu['datelieu']; if(!empty($lieu['heure'])):  ?> à partir de <?php echo $lieu['heure']; endif; ?>
